@@ -29,10 +29,11 @@ func NewIOLogger(reader io.Reader, writer io.Writer)*IOLogger{
 }
 
 func (p *IOLogger) Read(data []byte) (n int, err error) {
+	n, err = p.nextreader.Read(data)
 	if p.Enabled {
 		fmt.Println(data)
 	}
-	return p.nextreader.Read(data)
+	return n, err
 }
 
 func (p *IOLogger) Write(data []byte) (n int, err error) {
