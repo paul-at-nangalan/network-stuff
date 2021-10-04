@@ -26,7 +26,7 @@ func NewIOLogger(reader io.Reader, writer io.Writer)*IOLogger{
 		nextreader: reader,
 		nextwriter: writer,
 		Enabled: true,
-		MaxLogSize: 2000,
+		MaxLogSize: 500,
 	}
 }
 
