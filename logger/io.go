@@ -30,14 +30,16 @@ func NewIOLogger(reader io.Reader, writer io.Writer)*IOLogger{
 	}
 }
 
+/**
+Note: although the data limit is set to 500, there maybe multiple calls to this function during a
+	io operation - resulting in more logging than expected
+ */
 func (p *IOLogger)log(data []byte){
 	if p.Enabled {
 		if len(data) > p.MaxLogSize{
 			fmt.Println(string(data[:p.MaxLogSize]))
-			fmt.Println("FFS, data should be limited ", p.MaxLogSize)
 		}else {
 			fmt.Println(string(data))
-			fmt.Println("No limit, data size is ", len(data), " max is ", p.MaxLogSize)
 		}
 	}
 }
