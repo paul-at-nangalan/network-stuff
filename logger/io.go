@@ -9,6 +9,7 @@ type IOLogger struct{
 	nextreader io.Reader
 	nextwriter io.Writer
 	Enabled bool ///if you want to leave this logger in place in the prod version and be able to enable/disable it
+	MaxLogSize int
 }
 
 
@@ -25,20 +26,27 @@ func NewIOLogger(reader io.Reader, writer io.Writer)*IOLogger{
 		nextreader: reader,
 		nextwriter: writer,
 		Enabled: true,
+		MaxLogSize: 2000,
+	}
+}
+
+func (p *IOLogger)log(data []byte){
+	if p.Enabled {
+		if len(data) > p.MaxLogSize{
+			fmt.Println(string(data[:p.MaxLogSize]))
+		}else {
+			fmt.Println(string(data))
+		}
 	}
 }
 
 func (p *IOLogger) Read(data []byte) (n int, err error) {
 	n, err = p.nextreader.Read(data)
-	if p.Enabled {
-		fmt.Println(string(data))
-	}
+	p.log(data)
 	return n, err
 }
 
 func (p *IOLogger) Write(data []byte) (n int, err error) {
-	if p.Enabled {
-		fmt.Println(string(data))
-	}
+	p.log(data)
 	return p.nextwriter.Write(data)
 }
