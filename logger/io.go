@@ -34,8 +34,10 @@ func (p *IOLogger)log(data []byte){
 	if p.Enabled {
 		if len(data) > p.MaxLogSize{
 			fmt.Println(string(data[:p.MaxLogSize]))
+			fmt.Println("FFS, data should be limited ", p.MaxLogSize)
 		}else {
 			fmt.Println(string(data))
+			fmt.Println("No limit, data size is ", len(data), " max is ", p.MaxLogSize)
 		}
 	}
 }
