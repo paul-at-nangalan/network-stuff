@@ -46,7 +46,7 @@ func (p *IOLogger)log(data []byte){
 
 func (p *IOLogger) Read(data []byte) (n int, err error) {
 	n, err = p.nextreader.Read(data)
-	p.log(data)
+	p.log(data[:n])
 	return n, err
 }
 
