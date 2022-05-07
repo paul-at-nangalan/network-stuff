@@ -52,6 +52,13 @@ type Authenticator struct{
 	keylen int
 }
 
+////ONLY use this for generating keys, for checking use AuthFunc (see comments above)
+func NewAuthenticator()*Authenticator{
+	return &Authenticator{
+		keylen: 90,
+	}
+}
+
 func AuthFunc(handlerFunc http.HandlerFunc, authmod AuthModel, usehdr bool)http.HandlerFunc{
 	auth := &Authenticator{
 		handlerfunc: handlerFunc,
@@ -92,7 +99,6 @@ func (p *Authenticator)handleReq(name, authheader string, w http.ResponseWriter,
 		http.Error(w, "Invalid token", http.StatusForbidden)
 		return
 	}
-
 	/// if we get here it should be ok
 	p.handlerfunc(w, req)
 }
