@@ -104,6 +104,12 @@ func (p *Authenticator)handleReq(name, authheader string, w http.ResponseWriter,
 	p.handlerfunc(w, req)
 }
 
+func (p *Authenticator)Try(name, key string)error{
+	apikey := p.authmod.Get(name)
+	err := bcrypt.CompareHashAndPassword([]byte(apikey), []byte(key))
+	return err
+}
+
 func (p *Authenticator)Generate(name string, authmod AuthModelSetter)string{
 	b := make([]byte, p.keylen)
 	n, err := rand.Read(b)
