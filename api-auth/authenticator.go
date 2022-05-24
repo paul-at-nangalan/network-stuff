@@ -3,6 +3,7 @@ package api_auth
 import (
 	"crypto/rand"
 	"encoding/base64"
+	"fmt"
 	"github.com/paul-at-nangalan/errorhandler/handlers"
 	"log"
 	"net/http"
@@ -94,6 +95,8 @@ func (p *Authenticator)handleReq(name, authheader string, w http.ResponseWriter,
 		return
 	}
 	apikey := p.authmod.Get(name)
+	fmt.Println("Hash: ", apikey)
+	fmt.Println("Passwd: ", authheader)
 	err := bcrypt.CompareHashAndPassword([]byte(apikey), []byte(authheader))
 	if err != nil{
 		log.Println(err)
