@@ -32,6 +32,7 @@ func (p *Handler)HandleReq(w http.ResponseWriter, req *http.Request) {
 }
 
 ////somewhere , normally the constructor, set up the handler func wrapped in the authenticaotr
+/// replace Handler with the name of your type
 func NewHandler()*Handler{
 
 	handler := &Handler{}

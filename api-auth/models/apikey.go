@@ -24,7 +24,7 @@ func NewApikesModel(db *sql.DB)*ApikeysModel{
 	mig.Migrate("create-api-key-table", "api_keys", cols, index, primary)
 
 	inssql := `INSERT INTO api_keys (name, apikey, updated)
- 				VALUE($1, $2, NOW())
+ 				VALUES($1, $2, NOW())
 				ON CONFLICT (name) DO UPDATE SET apikey=excluded.apikey`
 	insstmt, err := db.Prepare(inssql)
 	handlers.PanicOnError(err)
